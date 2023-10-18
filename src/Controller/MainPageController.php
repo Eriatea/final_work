@@ -13,7 +13,14 @@ class MainPageController extends AbstractController
      */
     public function homepage(): Response
     {
-        return $this->render('homepage.html.twig', []);
+        return $this->render('homepage/homepage.html.twig', []);
     }
 
+    /**
+     * @Route("/try", name="app_article_show")
+     */
+    public function try(): Response
+    {
+        return $this->render('homepage/try.html.twig', []);
+    }
 }
