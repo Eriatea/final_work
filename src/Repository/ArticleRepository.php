@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,51 +17,60 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ArticleRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
     }
 
-    public function add(Article $entity, bool $flush = false): void
+    /**
+     * @return Article[] Returns an array of Article objects
+     */
+    public function findLatestPublished(): array
     {
-        $this->getEntityManager()->persist($entity);
+        $queryBuilder = $this->createQueryBuilder('a');
 
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->latest($this->published($queryBuilder))
+            ->getQuery()
+            ->getResult();
     }
 
-    public function remove(Article $entity, bool $flush = false): void
+    /**
+     * @return Article[] Returns an array of Article objects
+     */
+    public function findLatest()
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->latest()
+            ->getQuery()
+            ->getResult();
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    private function published(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder($qb)->andWhere('a.publishedAt IS NOT NULL');
+    }
 
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    private function latest(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $this->getOrCreateQueryBuilder($qb)->orderBy('a.publishedAt', 'DESC');
+    }
+
+    /**
+     * @param QueryBuilder|null $qb
+     * @return QueryBuilder
+     */
+    public function getOrCreateQueryBuilder(?QueryBuilder $qb): QueryBuilder
+    {
+        return $qb ?? $this->createQueryBuilder('a');
+    }
 }
