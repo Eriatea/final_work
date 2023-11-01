@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -48,9 +50,16 @@ class Article
     private $theme;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $keyword;
+    private $publishedAt;
+
+    /**
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @Gedmo\Slug(fields={"title"})
+     */
+    private $slug;
 
     public function getId(): ?int
     {
@@ -129,14 +138,26 @@ class Article
         return $this;
     }
 
-    public function getKeyword(): ?string
+    public function getPublishedAt(): ?\DateTime
     {
-        return $this->keyword;
+        return $this->publishedAt;
     }
 
-    public function setKeyword(string $keyword): self
+    public function setPublishedAt(?\DateTime $publishedAt): self
     {
-        $this->keyword = $keyword;
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
