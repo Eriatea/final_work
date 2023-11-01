@@ -34,8 +34,6 @@ class ArticleFixtures extends BaseFixtures
 do eiusmod tempor incididunt [Сметанка](/) ut labore et dolore magna aliqua')
                 ->setTheme('ключ')
                 ->setKeywords('ключ')
-                ->setKeyword('ключи')
-                ->setImageFilename('bg-showcase-1.jpg')
                 ->setImageFilename($this->faker->randomElement(self::ARTICLE_IMAGES));
         });
     }
