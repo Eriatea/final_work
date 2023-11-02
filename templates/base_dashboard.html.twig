@@ -11,7 +11,9 @@
                 <a href="{{ path('app_dashboard_history') }}"        class="list-group-item list-group-item-action bg-light">История статей</a>
                 <a href="{{ path('app_dashboard_subscription') }}"   class="list-group-item list-group-item-action bg-light">Подписка</a>
                 <a href="{{ path('app_dashboard_profile') }}"        class="list-group-item list-group-item-action bg-light">Профиль</a>
-                <a href="{{ path('app_dashboard_modules') }}"        class="list-group-item list-group-item-action bg-light">Модули генератора</a>
+                {% if is_granted('ROLE_PRO')  %}
+                    <a href="{{ path('app_dashboard_modules') }}"        class="list-group-item list-group-item-action bg-light">Модули генератора</a>
+                {% endif %}
             </div>
         </div>
 
@@ -27,7 +29,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Выйти</a>
+                            <a class="nav-link" href="{{ path('app_homepage') }}">Выйти</a>
                         </li>
                     </ul>
                 </div>
