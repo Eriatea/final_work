@@ -2,10 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
+ * @method User|null getUser()
+ */
 class DashboardController extends AbstractController
 {
     /**
@@ -49,7 +55,7 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard", name="app_dashboard_profile")
+     * @Route("/dashboard/profile", name="app_dashboard_profile")
      */
     public function profile(): Response
     {

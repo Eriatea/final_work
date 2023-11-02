@@ -22,15 +22,17 @@
         </div>
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">PLUS</h5>
+            <h5 class="card-title">{{ app.user.getLevelSubscription }}</h5>
             <p class="card-text">Ваш уровень подписки.</p>
-            <a href="#" class="btn btn-primary">Улучшить</a>
+            {% if is_granted('ROLE_FREE', 'ROLE_PLUS')  %}
+            <a href="{{ path('app_dashboard_subscription') }}" class="btn btn-primary">Улучшить</a>
+            {% endif %}
           </div>
         </div>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Создать статью</h5>
-            <a href="#" class="btn btn-primary">Создать</a>
+            <a href="{{ path('app_dashboard_create_article') }}" class="btn btn-primary">Создать</a>
           </div>
         </div>
         <div class="card">

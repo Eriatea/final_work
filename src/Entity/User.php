@@ -80,7 +80,7 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
+
 
         return array_unique($roles);
     }
@@ -149,6 +149,14 @@ class User implements UserInterface
         $this->firstName = $firstName;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLevelSubscription(): string
+    {
+        return substr_replace($this->roles[0], null,0, 5);
     }
 }
 
