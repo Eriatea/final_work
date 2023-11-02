@@ -61,16 +61,26 @@ class Article
      */
     private $slug;
 
-    public function getId(): ?int
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    /**
+     * @return string
+     */
+    public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -78,11 +88,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
+    /**
+     * @param string $description
+     * @return $this
+     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -90,11 +107,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBody(): ?string
     {
         return $this->body;
     }
 
+    /**
+     * @param string|null $body
+     * @return $this
+     */
     public function setBody(?string $body): self
     {
         $this->body = $body;
@@ -102,11 +126,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getKeywords(): ?string
     {
         return $this->keywords;
     }
 
+    /**
+     * @param string|null $keywords
+     * @return $this
+     */
     public function setKeywords(?string $keywords): self
     {
         $this->keywords = $keywords;
@@ -114,11 +145,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getImageFilename(): ?string
     {
         return $this->imageFilename;
     }
 
+    /**
+     * @param string $imageFilename
+     * @return $this
+     */
     public function setImageFilename(string $imageFilename): self
     {
         $this->imageFilename = $imageFilename;
@@ -126,11 +164,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTheme(): ?string
     {
         return $this->theme;
     }
 
+    /**
+     * @param string $theme
+     * @return $this
+     */
     public function setTheme(string $theme): self
     {
         $this->theme = $theme;
@@ -138,11 +183,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return \DateTime|null
+     */
     public function getPublishedAt(): ?\DateTime
     {
         return $this->publishedAt;
     }
 
+    /**
+     * @param \DateTime|null $publishedAt
+     * @return $this
+     */
     public function setPublishedAt(?\DateTime $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
@@ -150,11 +202,18 @@ class Article
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
+    /**
+     * @param string $slug
+     * @return $this
+     */
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
