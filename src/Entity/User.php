@@ -3,8 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -19,6 +22,7 @@ class User implements UserInterface
     private int $id;
 
     /**
+     * @Groups("main")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private string $email;
@@ -35,9 +39,20 @@ class User implements UserInterface
     private string $password;
 
     /**
+     * @Groups("main")
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private string $firstName;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ApiToken::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $apiTokens;
+
+    public function __construct()
+    {
+        $this->apiTokens = new ArrayCollection();
+    }
 
     /**
      * @return int|null
@@ -157,6 +172,36 @@ class User implements UserInterface
     public function getLevelSubscription(): string
     {
         return substr_replace($this->roles[0], null,0, 5);
+    }
+
+    /**
+     * @return Collection<int, ApiToken>
+     */
+    public function getApiTokens(): Collection
+    {
+        return $this->apiTokens;
+    }
+
+    public function addApiToken(ApiToken $apiToken): self
+    {
+        if (!$this->apiTokens->contains($apiToken)) {
+            $this->apiTokens[] = $apiToken;
+            $apiToken->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApiToken(ApiToken $apiToken): self
+    {
+        if ($this->apiTokens->removeElement($apiToken)) {
+            // set the owning side to null (unless already changed)
+            if ($apiToken->getUser() === $this) {
+                $apiToken->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
 
