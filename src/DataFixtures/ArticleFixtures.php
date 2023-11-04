@@ -3,9 +3,14 @@
 namespace App\DataFixtures;
 
 use App\Entity\Article;
+use App\Entity\User;
+use App\Service\FileUploader;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\File\File;
 
-class ArticleFixtures extends BaseFixtures
+class ArticleFixtures extends BaseFixtures implements DependentFixtureInterface
+
 {
     private const ARTICLE_TITLES = [
         'Есть ли жизнь после девятой жизни?',
@@ -34,7 +39,19 @@ class ArticleFixtures extends BaseFixtures
 do eiusmod tempor incididunt [Сметанка](/) ut labore et dolore magna aliqua')
                 ->setTheme('ключ')
                 ->setKeywords('ключ')
-                ->setImageFilename($this->faker->randomElement(self::ARTICLE_IMAGES));
+                ->setImageFilename($this->faker->randomElement(self::ARTICLE_IMAGES))
+                ->setAuthor($this->getRandomReference(User::class));
         });
     }
+
+    /**
+     * @return array
+     */
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
+    }
+
 }

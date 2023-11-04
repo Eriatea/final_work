@@ -15,5 +15,4 @@ class ArticleController extends AbstractController
     {
         return new Response('Здесь будет страница создания статьи');
     }
-
 }

@@ -62,6 +62,12 @@ class Article
     private $slug;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -220,4 +226,24 @@ class Article
 
         return $this;
     }
+
+    /**
+     * @return User|null
+     */
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param User|null $author
+     * @return $this
+     */
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
 }

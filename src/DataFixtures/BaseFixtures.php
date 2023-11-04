@@ -58,7 +58,35 @@ abstract class BaseFixtures extends Fixture
     protected function createMany(string $className, int $count, callable $factory): void
     {
         for ($i = 0; $i < $count; $i++) {
-            $this->create($className, $factory);
+            $entity = $this->create($className, $factory);
+
+            $this->addReference("$className|$i", $entity);
         }
+    }
+
+    private $referencesIndex = [];
+
+    /**
+     * @param $className
+     * @return object
+     * @throws \Exception
+     */
+    protected function getRandomReference($className): object
+    {
+        if (! isset($this->referencesIndex[$className])) {
+            $this->referencesIndex[$className] = [];
+
+            foreach ($this->referenceRepository->getReferences() as $key => $reference) {
+                if (strpos($key, $className . '|') === 0) {
+                    $this->referencesIndex[$className][] = $key;
+                }
+            }
+        }
+
+        if (empty($this->referencesIndex[$className])) {
+            throw new \Exception('Не найдены ссылки на класс: ' . $className);
+        }
+
+        return $this->getReference($this->faker->randomElement($this->referencesIndex[$className]));
     }
 }

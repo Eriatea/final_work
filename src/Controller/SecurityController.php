@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Security\LoginFormAuthenticator;
+use App\Service\RegisterUserProvider;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -32,9 +38,30 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(): Response
+    public function register(Request $request,  GuardAuthenticatorHandler $guard, LoginFormAuthenticator $authenticator, RegisterUserProvider $registerUserProvider): ?Response
     {
-        return $this->render('security/register.html.twig', []);
-    }
+        if ($request->isMethod('POST')) {
+            $email = $request->request->get('email');
+            $firstName = $request->request->get('firstName');
+            $password = $request->request->get('password');
+            $confirmPassword = $request->request->get('confirmPassword');
 
+            if ($password === $confirmPassword) {
+                $user = $registerUserProvider->registerUser($email, $firstName, $password);
+
+                return $guard->authenticateUserAndHandleSuccess(
+                    $user,
+                    $request,
+                    $authenticator,
+                    'main'
+                );
+            } else return $this->render('security/register.html.twig', [
+                'error' => 'Пароли не совпадают',
+            ]);
+        }
+
+        return $this->render('security/register.html.twig', [
+            'error' => '',
+        ]);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * @IsGranted("IS_AUTHENTICATED_REMEMBERED")
  * @method User|null getUser()
+ * @method Article|null
  */
 class DashboardController extends AbstractController
 {
