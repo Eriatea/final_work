@@ -53,6 +53,22 @@
     <script src="{{ asset("vendor/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
 {% endblock %}
 
+{% block message %}
+{% if app.session.flashBag.peek('flash_message')|length > 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-success" role="alert">
+                    {% for message in app.flashes('flash_message') %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
 {% block body %}{% endblock %}
 
 </body>

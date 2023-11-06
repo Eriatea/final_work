@@ -60,7 +60,7 @@ class ArticleRepository extends ServiceEntityRepository
      * @param QueryBuilder|null $qb
      * @return QueryBuilder
      */
-    private function latest(QueryBuilder $qb = null): QueryBuilder
+    public function latest(QueryBuilder $qb = null): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder($qb)->orderBy('a.publishedAt', 'DESC');
     }
