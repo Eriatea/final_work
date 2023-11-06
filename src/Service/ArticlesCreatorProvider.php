@@ -18,27 +18,12 @@ class ArticlesCreatorProvider
     }
 
     /**
-     * @param ArticleContentProvider $articleContentProvider
-     * @return Article
+     * @param Article $article
+     * @return void
      */
-    public function create(ArticleContentProvider $articleContentProvider): Article
+    public function create(Article $article): void
     {
-        $article = new Article();
-
-        $article
-            ->setTitle('Есть ли жизнь после девятой жизни?')
-            ->setDescription('Краткое описание статьи')
-            ->setBody($articleContentProvider->start())
-            ->setTheme('ключ')
-            ->setKeywords('ключ')
-        ->setKeyword('ключи');
-
-        $article
-            ->setImageFilename('bg-showcase-1.jpg');
-
         $this->em->persist($article);
         $this->em->flush();
-
-        return $article;
     }
 }

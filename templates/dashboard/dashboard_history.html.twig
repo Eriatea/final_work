@@ -16,40 +16,26 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Зачем пирожкам начинка</td>
-        <td>Часто ли вам приходилось задумываться, зачем пирожкам начи...</td>
-        <td><a href="{{ path('app_dashboard_article_detail') }}"><i class="fas fa-eye"></i></a> </td>
-      </tr>
-
-      <tr>
-        <th scope="row">2</th>
-        <td>Программируем на php</td>
-        <td>Php - это язык программирования на <b>php</b>, где вы <b>php</b> программист, а код написан на <b>php</b>...</td>
-        <td><a href="{{ path('app_dashboard_article_detail') }}"><i class="fas fa-eye"></i></a> </td>
-      </tr>
-
-      <tr>
-        <th scope="row">3</th>
-        <td>Зачем пирожкам начинка</td>
-        <td>Часто ли вам приходилось задумываться, зачем пирожкам начи...</td>
-        <td><a href="{{ path('app_dashboard_article_detail') }}"><i class="fas fa-eye"></i></a> </td>
-      </tr>
-
-      <tr>
-        <th scope="row">4</th>
-        <td>Серь раз отъешь, один поспи</td>
-        <td>Еда, еда, еда, еда, <br> вода, еда, еда, вода, <br> вода, вода, еда, еда, <br> с другими словами у Феди беда</td>
-        <td><a href="{{ path('app_dashboard_article_detail') }}"><i class="fas fa-eye"></i></a> </td>
-      </tr>
-
-      <tr>
-        <th scope="row">5</th>
-        <td>Зачем пирожкам начинка</td>
-        <td>Часто ли вам приходилось задумываться, зачем пирожкам начи...</td>
-        <td><a href="{{ path('app_dashboard_article_detail') }}"><i class="fas fa-eye"></i></a> </td>
-      </tr>
+      {% for article in pagination %}
+        <tr>
+          <th scope="row">1</th>
+          <td>
+            <a>
+              {{ article.title }}
+            </a>
+          </td>
+          <td>{{ article.description }}</td>
+          <td>
+            <a href="{{ path('app_dashboard_article_detail', { slug: article.slug}) }}">
+              {{ article.slug }}
+            </a>
+          </td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="4">Нет статей</td>
+        </tr>
+      {% endfor %}
       </tbody>
     </table>
 
@@ -70,4 +56,5 @@
     </nav>
   </div>
 </div>
+  {{ knp_pagination_render(pagination) }}
 {% endblock %}
