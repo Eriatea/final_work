@@ -6,6 +6,8 @@ use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -21,6 +23,7 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="У вашей великолепной статьи должен быть такой же заголовок")
      */
     private $title;
 
@@ -245,5 +248,4 @@ class Article
 
         return $this;
     }
-
 }
