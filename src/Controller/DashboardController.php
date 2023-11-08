@@ -93,14 +93,6 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard/modules", name="app_dashboard_modules")
-     */
-    public function modules(): Response
-    {
-        return $this->render('dashboard/dashboard_modules.html.twig', []);
-    }
-
-    /**
      * @Route("/dashboard/profile", name="app_dashboard_profile")
      */
     public function profile(): Response

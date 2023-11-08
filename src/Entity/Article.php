@@ -248,4 +248,11 @@ class Article
 
         return $this;
     }
+
+    public function getQuantityArticles()
+    {
+
+
+        return 13;
+    }
 }
