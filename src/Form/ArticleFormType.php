@@ -28,6 +28,9 @@ class ArticleFormType extends AbstractType
                 ],
                 'required' => false,
             ])
+            ->add('body', null, [
+                'rows' => 15
+            ])
             ->add('theme', ChoiceType::class, [
                 'label' => 'Тематика',
                 'choices' => [
