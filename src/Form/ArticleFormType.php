@@ -5,6 +5,9 @@ namespace App\Form;
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,13 +26,9 @@ class ArticleFormType extends AbstractType
                 'label' => 'Заголовок статьи',
                 'attr' => [
                     'placeholder' => 'Заголовок статьи',
-                    'value' => 'Тестовая статья',
-                    'disabled' => true
+                    'value' => 'Тестовая статья'
                 ],
                 'required' => false,
-            ])
-            ->add('body', null, [
-                'rows' => 15
             ])
             ->add('theme', ChoiceType::class, [
                 'label' => 'Тематика',
@@ -46,44 +45,51 @@ class ArticleFormType extends AbstractType
                     'value' => 'EXAMPLE',
                     'disabled' => true
                 ]
+            ])
+            ->add('genitive', TextType::class, [
+                'mapped' => false,
+                'label' => 'Родительный падеж',
+                'attr' => [
+                    'placeholder' => 'Родительный падеж',
+                    'value' => 'EXAMPLE',
+                    'disabled' => true
+                ]
+            ])
+            ->add('plural', TextType::class, [
+                'mapped' => false,
+                'label' => 'Множественное число',
+                'attr' => [
+                    'placeholder' => 'Множественное число',
+                    'value' => 'EXAMPLES',
+                    'disabled' => true
+                ]
+            ])
+            ->add('sizeFrom', IntegerType::class, [
+                'mapped' => false,
+                'label' => 'Размер статьи от',
+                'attr' => [
+                    'placeholder' => 'Размер статьи от'
+                ]
+            ])
+            ->add('sizeTo', IntegerType::class, [
+                'mapped' => false,
+                'label' => 'До',
+                'attr' => [
+                    'placeholder' => 'До'
+                ]
+            ])
+            ->add('words', TextType::class, [
+                'mapped' => false,
+                'label' => 'Продвигаемые слова',
+                'attr' => [
+                    'placeholder' => 'Ключевое слово',
+                    'value' => 'EXAMPLE',
+                ]
+            ])
+            ->add('image_filename', FileType::class, [
+                'mapped' => false,
+                'label' => 'Изображения',
             ]);
-//            ->add('genitive', TextType::class, [
-//                'label' => 'Родительный падеж',
-//                'attr' => [
-//                    'placeholder' => 'Родительный падеж',
-//                    'value' => 'EXAMPLE',
-//                    'disabled' => true
-//                ]
-//            ])
-//            ->add('plural', TextType::class, [
-//                'label' => 'Множественное число',
-//                'attr' => [
-//                    'placeholder' => 'Множественное число',
-//                    'value' => 'EXAMPLES',
-//                    'disabled' => true
-//                ]
-//            ])
-//            ->add('sizeFrom', IntegerType::class, [
-//                'label' => 'Размер статьи от',
-//                'attr' => [
-//                    'placeholder' => 'Размер статьи от'
-//                ]
-//            ])
-//            ->add('sizeTo', IntegerType::class, [
-//                'label' => 'До',
-//                'attr' => [
-//                    'placeholder' => 'До'
-//                ]
-//            ])
-//            ->add('words', CollectionType::class, [
-//                'label' => 'Продвигаемые слова',
-//                'entry_type' => TextType::class,
-//                'allow_add' => true,
-//                'allow_delete' => true
-//            ])
-//            ->add('image_filename', FileType::class, [
-//                'label' => 'Изображения',
-//            ]);
     }
 
     /**

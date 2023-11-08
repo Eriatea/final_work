@@ -10,8 +10,20 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\File;
 
 class ArticleFixtures extends BaseFixtures implements DependentFixtureInterface
-
 {
+    /**
+     * @var FileUploader
+     */
+    private $articleFileUploader;
+
+    /**
+     * @param FileUploader $articleFileUploader
+     */
+    public function __construct(FileUploader $articleFileUploader)
+    {
+        $this->articleFileUploader = $articleFileUploader;
+    }
+
     private const ARTICLE_TITLES = [
         'Есть ли жизнь после девятой жизни?',
         'Когда в машинах поставят лоток?',
@@ -32,6 +44,8 @@ class ArticleFixtures extends BaseFixtures implements DependentFixtureInterface
     public function loadData(ObjectManager $manager): void
     {
         $this->createMany(Article::class, 10, function (Article $article) {
+            $fileName = $this->faker->randomElement(self::ARTICLE_IMAGES);
+
             $article
                 ->setTitle($this->faker->randomElement(self::ARTICLE_TITLES))
                 ->setDescription('Краткое описание статьи')
@@ -39,7 +53,7 @@ class ArticleFixtures extends BaseFixtures implements DependentFixtureInterface
 do eiusmod tempor incididunt [Сметанка](/) ut labore et dolore magna aliqua')
                 ->setTheme('ключ')
                 ->setKeywords('ключ')
-                ->setImageFilename($this->faker->randomElement(self::ARTICLE_IMAGES))
+                ->setImageFilename($this->articleFileUploader->uploadFile(new File(dirname(dirname(__DIR__)) . '/public/img/' . $fileName)))
                 ->setAuthor($this->getRandomReference(User::class));
         });
     }
