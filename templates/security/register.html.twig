@@ -8,13 +8,6 @@
 
   <div class="container">
     <div class="row">
-      {% if error %}
-        <div class="col-12">
-          <div class="alert alert-danger" role="alert">
-            {{ error }}
-          </div>
-        </div>
-      {% endif %}
 
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
@@ -23,30 +16,29 @@
             <div class="alert alert-success" role="alert">
               Для завершения регистрации подтвердите ваш email
             </div>
-            <form class="form-signin" method="post">
-              <div class="form-label-group">
-                <input name="firstName" type="text" id="inputName" class="form-control" placeholder="Ваше имя" required autofocus>
-                <label for="inputName">Ваше имя</label>
-              </div>
-              <div class="form-label-group">
-                <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Ваш Email" required>
-                <label for="inputEmail">Ваш Email</label>
-              </div>
+            {{ form_start(registrationForm, { attr: {class: 'form-signin'} }) }}
+            <h1 class="h3 mb-3 font-weight-normal">Регистрация</h1>
 
-              <div class="form-label-group">
-                <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
-                <label for="inputPassword">Пароль</label>
-              </div>
+            {{ form_row(registrationForm.email, {
+              attr: {placeholder: 'Ваш Email...'},
+              label_attr: {class: 'sr-only'}
+            }) }}
+            {{ form_row(registrationForm.firstName, {
+              attr: {placeholder: 'Ваше Имя...'},
+              label_attr: {class: 'sr-only'}
+            }) }}
+            {{ form_row(registrationForm.plainPassword, {
+              attr: {placeholder: 'Ваш Пароль...'},
+              label_attr: {class: 'sr-only'}
+            }) }}
 
-              <div class="form-label-group">
-                <input name="confirmPassword" type="password" id="inputConfirmPassword" class="form-control" placeholder="Подтверждение пароля" required>
-                <label for="inputConfirmPassword">Подтверждение пароля</label>
-              </div>
+            {{ form_row(registrationForm.agreeTerms, {
+              label: 'Согласен с условиями'
+            }) }}
 
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Регистрация</button>
-              <hr class="my-4">
-              <div class="text-center"><a href="{{ path('app_login') }}">Я уже зарегистрирован</a></div>
-            </form>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
+            {{ form_end(registrationForm) }}
+
           </div>
         </div>
       </div>

@@ -8,10 +8,12 @@
     {% block message %}
       {{ parent() }}
     {% endblock %}
-    {{ form_start(articleForm) }}
-      {{ form_widget(articleForm) }}
 
-      <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Создать</button>
+    {{ form_row(articleForm.title, { label: 'Заголовок статьи' }) }}
+    {{ form_row(articleForm.theme, { label: 'Тема статьи' }) }}
+    {{ form_row(articleForm.keywords, { label: 'Ключевые слова' }) }}
+
+    <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Создать</button>
 
     {{ form_end(articleForm) }}
   </div>

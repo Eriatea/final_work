@@ -25,7 +25,8 @@ class ArticleFormType extends AbstractType
                     'placeholder' => 'Заголовок статьи',
                     'value' => 'Тестовая статья',
                     'disabled' => true
-                ]
+                ],
+                'required' => false,
             ])
             ->add('theme', ChoiceType::class, [
                 'label' => 'Тематика',
