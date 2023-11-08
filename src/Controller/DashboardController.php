@@ -7,8 +7,10 @@ use App\Entity\User;
 use App\Form\ArticleFormType;
 use App\Repository\ArticleRepository;
 use App\Service\ArticlesCreatorProvider;
+use App\Service\FileUploader;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +44,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/create_article", name="app_dashboard_create_article")
      */
-    public function create_article(ArticlesCreatorProvider $articlesCreatorProvider, Request $request): Response
+    public function create_article(ArticlesCreatorProvider $articlesCreatorProvider, Request $request, FileUploader $articleFileUploader): Response
     {
         $form = $this->createForm(ArticleFormType::class);
 
@@ -50,12 +52,19 @@ class DashboardController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $article = $form->getData();
+
+            /** @var UploadedFile|null $image */
+            $image = $form->get('image')->getData();
+
+            if ($image) {
+                $article->setImageFilename($articleFileUploader->uploadFile($image, $article->getImageFilename()));
+            }
+
             $article
                 ->setDescription('Краткое описание статьи')
                 ->setBody('Краткое описание статьи')
                 ->setAuthor($this->getUser())
-                ->setPublishedAt(new \DateTime())
-                ->setImageFilename('test.jpg');
+                ->setPublishedAt(new \DateTime());
 
             $articlesCreatorProvider->create($article);
 
