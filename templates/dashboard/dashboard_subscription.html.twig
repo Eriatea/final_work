@@ -6,7 +6,7 @@
 
   <div class="col-xl-8">
     <div class="alert alert-success" role="alert">
-      Подписка {{ app.user.getLevelSubscription }} оформлена, до 01.01.1970
+      Подписка {{ app.user.getLevelSubscription }} оформлена
     </div>
     <section class="pricing py-2 row">
       <div class="container">
@@ -24,7 +24,7 @@
                   <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Свои модули</li>
                 </ul>
                 {% if is_granted('ROLE_FREE') %}
-                  <a href="#" class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
+                  <a class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
                 {% endif %}
               </div>
             </div>
@@ -42,9 +42,9 @@
                   <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Свои модули</li>
                 </ul>
                 {% if is_granted('ROLE_PLUS') %}
-                  <a href="#" class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
+                  <a class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
                 {% elseif is_granted('ROLE_FREE') %}
-                  <a href="#" class="btn btn-block btn-primary text-uppercase">Оформить</a>
+                  <a class="btn btn-block btn-primary text-uppercase">Оформить</a>
                 {% endif %}
               </div>
             </div>

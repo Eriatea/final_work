@@ -11,9 +11,6 @@
                 <a href="{{ path('app_dashboard_history') }}"        class="list-group-item list-group-item-action bg-light">История статей</a>
                 <a href="{{ path('app_dashboard_subscription') }}"   class="list-group-item list-group-item-action bg-light">Подписка</a>
                 <a href="{{ path('app_dashboard_profile') }}"        class="list-group-item list-group-item-action bg-light">Профиль</a>
-                {% if is_granted('ROLE_PRO')  %}
-                    <a href="{{ path('app_dashboard_modules') }}"        class="list-group-item list-group-item-action bg-light">Модули генератора</a>
-                {% endif %}
             </div>
         </div>
 
