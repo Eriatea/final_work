@@ -42,8 +42,7 @@ class ArticleFormType extends AbstractType
                 'label' => 'Ключевое слово',
                 'attr' => [
                     'placeholder' => 'Ключевое слово',
-                    'value' => 'EXAMPLE',
-                    'disabled' => true
+                    'value' => 'EXAMPLE'
                 ]
             ])
             ->add('genitive', TextType::class, [
@@ -51,8 +50,7 @@ class ArticleFormType extends AbstractType
                 'label' => 'Родительный падеж',
                 'attr' => [
                     'placeholder' => 'Родительный падеж',
-                    'value' => 'EXAMPLE',
-                    'disabled' => true
+                    'value' => 'EXAMPLE'
                 ]
             ])
             ->add('plural', TextType::class, [
@@ -60,8 +58,7 @@ class ArticleFormType extends AbstractType
                 'label' => 'Множественное число',
                 'attr' => [
                     'placeholder' => 'Множественное число',
-                    'value' => 'EXAMPLES',
-                    'disabled' => true
+                    'value' => 'EXAMPLES'
                 ]
             ])
             ->add('sizeFrom', IntegerType::class, [
@@ -76,14 +73,6 @@ class ArticleFormType extends AbstractType
                 'label' => 'До',
                 'attr' => [
                     'placeholder' => 'До'
-                ]
-            ])
-            ->add('words', TextType::class, [
-                'mapped' => false,
-                'label' => 'Продвигаемые слова',
-                'attr' => [
-                    'placeholder' => 'Ключевое слово',
-                    'value' => 'EXAMPLE',
                 ]
             ])
             ->add('image_filename', FileType::class, [

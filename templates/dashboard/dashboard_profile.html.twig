@@ -1,46 +1,54 @@
 {% extends 'base_dashboard.html.twig' %}
 
 {% block containerfluid %}
-<div class="container-fluid">
-  <h1 class="mt-4">Профиль</h1>
-  <div class="row">
+  <div class="container-fluid">
+    <h1 class="mt-4">Профиль</h1>
+    <div class="row">
 
-    <div class="col-xl-6">
-      <div class="alert alert-success" role="alert">
-        Профиль успешно изменен
-      </div>
+      <div class="col-xl-6">
+        {% block message %}
+          {{ parent() }}
+        {% endblock %}
 
-      <div class="card my-4">
-        <div class="card-body">
-
-          <p>Ваш API токен: asft21sfsvzxvghk1912t1g12m</p>
-          <button class="btn btn-outline-primary">Создать новый</button>
-        </div>
-      </div>
-
-      <form>
-        <div class="form-label-group">
-          <input type="text" id="inputName" class="form-control" placeholder="Ваше имя" required value="{{ app.user.firstName }}" autofocus>
-          <label for="inputName">Ваше имя</label>
-        </div>
-        <div class="form-label-group">
-          <input type="email" id="inputEmail" class="form-control" placeholder="Ваш Email" required value="{{ app.user.email }}">
-          <label for="inputEmail">Ваш Email</label>
+        <div class="card my-4">
+          <div class="card-body">
+            {{ form_start(editTokenForm) }}
+            {{ form_row(editTokenForm.token) }}
+            <button class="btn btn-outline-primary">Создать новый</button>
+            {{ form_end(editTokenForm) }}
+          </div>
         </div>
 
+        {{ form_start(editUserForm, { attr: {class: 'form-signin'} }) }}
+        <h1 class="h3 mb-3 font-weight-normal">Изменение профиля</h1>
         <div class="form-label-group">
-          <input type="password" id="inputPassword" class="form-control" placeholder="Пароль" required>
-          <label for="inputPassword">Пароль</label>
+          {{ form_row(editUserForm.email, {
+            attr: {placeholder: 'Ваш Email...'},
+            label_attr: {class: ''}
+          }) }}
         </div>
-
         <div class="form-label-group">
-          <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Подтверждение пароля" required>
-          <label for="inputConfirmPassword">Подтверждение пароля</label>
+          {{ form_row(editUserForm.firstName, {
+            attr: {placeholder: 'Ваше Имя...'},
+            label_attr: {class: ''}
+          }) }}
+        </div>
+        <div class="form-label-group">
+          {{ form_row(editUserForm.plainPassword, {
+            attr: {placeholder: 'Ваш Пароль'},
+            label_attr: {class: ''}
+          }) }}
+        </div>
+        <div class="form-label-group">
+          {{ form_row(editUserForm.plainPasswordTwo, {
+            label: 'Подтверждение пароля'
+          }) }}
         </div>
 
         <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Изменить</button>
-      </form>
+        {{ form_end(editUserForm) }}
+
+      </div>
     </div>
   </div>
-</div>
 {% endblock %}
