@@ -5,9 +5,9 @@
 <div class="row">
 
   <div class="col-xl-8">
-    <div class="alert alert-success" role="alert">
-      Подписка {{ app.user.getLevelSubscription }} оформлена
-    </div>
+    {% block message %}
+      {{ parent() }}
+    {% endblock %}
     <section class="pricing py-2 row">
       <div class="container">
         <div class="row">
@@ -44,7 +44,9 @@
                 {% if is_granted('ROLE_PLUS') %}
                   <a class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
                 {% elseif is_granted('ROLE_FREE') %}
-                  <a class="btn btn-block btn-primary text-uppercase">Оформить</a>
+                  <form method="POST">
+                    <button class="btn btn-block btn-primary text-uppercase" name="subscription" value="PLUS">Оформить</button>
+                  </form>
                 {% endif %}
               </div>
             </div>
@@ -62,9 +64,11 @@
                   <li><span class="fa-li"><i class="fas fa-check"></i></span>Свои модули</li>
                 </ul>
                 {% if is_granted('ROLE_PRO') %}
-                  <a href="#" class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
+                  <a class="btn btn-block btn-secondary text-uppercase" disabled>Текущий уровень</a>
                 {% elseif is_granted('ROLE_FREE', 'ROLE_PLUS') %}
-                  <a href="#" class="btn btn-block btn-primary text-uppercase">Оформить</a>
+                  <form method="POST">
+                    <button class="btn btn-block btn-primary text-uppercase" name="subscription" value="PRO">Оформить</button>
+                  </form>
                 {% endif %}
               </div>
             </div>

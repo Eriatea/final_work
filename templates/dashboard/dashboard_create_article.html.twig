@@ -11,12 +11,11 @@
     {{ form_start(articleForm, { attr: {class: 'form-signin'} }) }}
     {{ form_row(articleForm.title, { label: 'Заголовок статьи' }) }}
     {{ form_row(articleForm.theme, { label: 'Тема статьи' }) }}
-    {{ form_row(articleForm.keywords, { label: 'Ключевые слова' }) }}
+    {{ form_row(articleForm.keywords, { label: 'Ключевое слово' }) }}
     {{ form_row(articleForm.genitive, { label: 'Родительный падеж' }) }}
     {{ form_row(articleForm.plural, { label: 'Множественное число' }) }}
     {{ form_row(articleForm.sizeFrom, { label: 'Размер статьи от' }) }}
     {{ form_row(articleForm.sizeTo, { label: 'До' }) }}
-    {{ form_row(articleForm.words, { label: 'Продвигаемые слова' }) }}
     {{ form_row(articleForm.image_filename, {
       label: 'Изображение',
       attr: {
