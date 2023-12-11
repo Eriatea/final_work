@@ -48,7 +48,7 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
      * @param UserProviderInterface $userProvider
      * @return User|UserInterface|null
      */
-    public function getUser($credentials, UserProviderInterface $userProvider): object
+    public function getUser($credentials, UserProviderInterface $userProvider): User
     {
         $token = $this->em->find($credentials);
 
@@ -103,7 +103,7 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null): void
     {
-        throw new Exception('Never called');
+        return;
     }
 
     /**
