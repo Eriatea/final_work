@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Form\Model\UserRegistrationFormModel;
 use App\Form\UserRegistrationFormType;
 use App\Security\LoginFormAuthenticator;
-use App\Service\RegisterUserProvider;
+use App\Service\UserService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +38,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, RegisterUserProvider $userService, GuardAuthenticatorHandler $guard, LoginFormAuthenticator $authenticator): ?Response
+    public function register(Request $request, UserService $userService, GuardAuthenticatorHandler $guard, LoginFormAuthenticator $authenticator): ?Response
     {
         $form = $this->createForm(UserRegistrationFormType::class);
         $form->handleRequest($request);
