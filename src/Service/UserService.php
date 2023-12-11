@@ -8,7 +8,7 @@ use App\Form\Model\UserRegistrationFormModel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class RegisterUserProvider
+class UserService
 {
     /**
      * @var UserPasswordEncoderInterface
@@ -53,5 +53,26 @@ class RegisterUserProvider
         $this->em->flush();
 
         return $user;
+    }
+
+    /**
+     * @param User $userModel
+     * @return User
+     */
+    public function editUser(User $userModel): User
+    {
+        $user = new User();
+
+        $userModel
+            ->setEmail($userModel->getEmail())
+            ->setFirstName($userModel->getFirstName())
+            ->setPassword($userModel->getPassword())
+            ->setRoles($userModel->getRoles())
+        ;
+
+        $this->em->persist($userModel);
+        $this->em->flush();
+
+        return $userModel;
     }
 }

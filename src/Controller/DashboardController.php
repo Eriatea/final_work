@@ -8,10 +8,10 @@ use App\Form\ApiTokenEditFormType;
 use App\Form\ArticleFormType;
 use App\Form\UserEditFormType;
 use App\Repository\ArticleRepository;
-use App\Service\ArticleContentProvider;
-use App\Service\ArticlesCreatorProvider;
-use App\Service\EditApiTokenProvider;
-use App\Service\EditUserProvider;
+use App\Service\ArticleContent;
+use App\Service\ArticleService;
+use App\Service\ApiTokenService;
+use App\Service\UserService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -48,7 +48,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/create_article", name="app_dashboard_create_article")
      */
-    public function create_article(ArticlesCreatorProvider $articlesCreatorProvider, Request $request): Response
+    public function create_article(ArticleService $articlesCreatorProvider, Request $request): Response
     {
         $form = $this->createForm(ArticleFormType::class);
 
@@ -96,7 +96,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/profile", name="app_dashboard_profile")
      */
-    public function profile(Request $request, EditUserProvider $userService, EditApiTokenProvider $tokenProvider): Response
+    public function profile(Request $request, UserService $userService, ApiTokenService $tokenProvider): Response
     {
         $formToken = $this->createForm(ApiTokenEditFormType::class, $this->getUser());
         $formToken->handleRequest($request);
@@ -130,7 +130,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/subscription", name="app_dashboard_subscription")
      */
-    public function subscription(Request $request, EditUserProvider $userService): Response
+    public function subscription(Request $request, UserService $userService): Response
     {
         if ($request->isMethod('POST')) {
             $user = $this->getUser();

@@ -6,7 +6,7 @@ use App\Entity\ApiToken;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 
-class EditApiTokenProvider
+class ApiTokenService
 {
     /**
      * @var EntityManagerInterface
