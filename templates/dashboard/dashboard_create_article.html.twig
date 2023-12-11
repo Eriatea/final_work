@@ -1,0 +1,31 @@
+{% extends 'base_dashboard.html.twig' %}
+
+{% block containerfluid %}
+  <h1 class="mt-4">Создание статьи</h1>
+  <div class="row">
+
+    <div class="col-xl-6">
+      {% block message %}
+        {{ parent() }}
+      {% endblock %}
+    {{ form_start(articleForm, { attr: {class: 'form-signin'} }) }}
+    {{ form_row(articleForm.title, { label: 'Заголовок статьи' }) }}
+    {{ form_row(articleForm.theme, { label: 'Тема статьи' }) }}
+    {{ form_row(articleForm.keywords, { label: 'Ключевое слово' }) }}
+    {{ form_row(articleForm.genitive, { label: 'Родительный падеж' }) }}
+    {{ form_row(articleForm.plural, { label: 'Множественное число' }) }}
+    {{ form_row(articleForm.sizeFrom, { label: 'Размер статьи от' }) }}
+    {{ form_row(articleForm.sizeTo, { label: 'До' }) }}
+    {{ form_row(articleForm.image_filename, {
+      label: 'Изображение',
+      attr: {
+        placeholder: 'Выберите изображение'
+      }
+    }) }}
+
+      <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Создать</button>
+
+      {{ form_end(articleForm) }}
+    </div>
+  </div>
+{% endblock %}
