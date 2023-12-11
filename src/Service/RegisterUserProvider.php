@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\ApiToken;
 use App\Entity\User;
 use App\Form\Model\UserRegistrationFormModel;
 use Doctrine\ORM\EntityManagerInterface;
@@ -48,6 +49,7 @@ class RegisterUserProvider
         ;
 
         $this->em->persist($user);
+        $this->em->persist(new ApiToken($user));
         $this->em->flush();
 
         return $user;

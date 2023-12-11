@@ -3,7 +3,7 @@
 namespace App\Security;
 
 use App\Entity\User;
-use App\Repository\ApiTokenRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -16,16 +16,13 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 {
     /**
-     * @var ApiTokenRepository
+     * @var EntityManagerInterface
      */
-    private $apiTokenRepository;
+    private $em;
 
-    /**
-     * @param ApiTokenRepository $apiTokenRepository
-     */
-    public function __construct(ApiTokenRepository $apiTokenRepository)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->apiTokenRepository = $apiTokenRepository;
+        $this->em = $em;
     }
 
     /**
@@ -53,7 +50,7 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider): object
     {
-        $token = $this->apiTokenRepository->findOneBy(['token' => $credentials]);
+        $token = $this->em->find($credentials);
 
         if (!$token) {
             throw new CustomUserMessageAuthenticationException('Invalid token');
