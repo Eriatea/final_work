@@ -47,7 +47,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity=ApiToken::class, mappedBy="user", orphanRemoval=true)
      */
-    private $apiTokens;
+    private Collection $apiTokens;
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author")
