@@ -12,8 +12,6 @@ use App\Service\ArticleContentProvider;
 use App\Service\ArticlesCreatorProvider;
 use App\Service\EditApiTokenProvider;
 use App\Service\EditUserProvider;
-use App\Service\FileUploader;
-use App\Service\RegisterUserProvider;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -50,7 +48,7 @@ class DashboardController extends AbstractController
     /**
      * @Route("/dashboard/create_article", name="app_dashboard_create_article")
      */
-    public function create_article(ArticlesCreatorProvider $articlesCreatorProvider, Request $request, FileUploader $articleFileUploader, ArticleContentProvider $articleContent): Response
+    public function create_article(ArticlesCreatorProvider $articlesCreatorProvider, Request $request): Response
     {
         $form = $this->createForm(ArticleFormType::class);
 
@@ -62,26 +60,14 @@ class DashboardController extends AbstractController
             /** @var UploadedFile|null $image */
             $image = $form->get('image_filename')->getData();
             $keywords = $form->get('keywords')->getData();
-
-            if ($image) {
-                $article->setImageFilename($articleFileUploader->uploadFile($image, $article->getImageFilename()));
-            }
-
             $plural = $form->get('plural')->getData();
             $genitive = $form->get('genitive')->getData();
             $sizeFrom = $form->get('sizeFrom')->getData();
             $sizeTo = $form->get('sizeTo')->getData();
             $theme = $form->get('theme')->getData();
+            $user = $this->getUser();
 
-            $body = $articleContent->generate_text($plural, $genitive, $keywords, $sizeFrom, $sizeTo, $theme);
-
-            $article
-                ->setDescription('Статья о ' . $keywords)
-                ->setBody($body)
-                ->setAuthor($this->getUser())
-                ->setPublishedAt(new \DateTime());
-
-            $articlesCreatorProvider->create($article);
+            $articlesCreatorProvider->create($article, $image, $plural, $genitive, $keywords, $sizeFrom, $sizeTo, $theme, $user);
 
             $this->addFlash('flash_message', 'Статья успешно создана');
         }
