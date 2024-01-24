@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}BlaBlaArticle - Лучший генератор статей{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/app.min.css') }}" rel="stylesheet">
+    {% endblock %}
+</head>
+
+<body>
+{% block header %}
+<nav class="navbar navbar-light bg-light static-top">
+    <div class="container">
+        {% block container %}
+        <span class="navbar-brand">BlaBlaArticle</span>
+        <a class="js-scroll-trigger">Сервисы</a>
+        <a class="js-scroll-trigger">Автор</a>
+        <a class="btn btn-primary" href="{{ path('app_login') }}">Войти</a>
+        {% endblock %}
+    </div>
+</nav>
+
+<header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h1 class="mb-5">Создай уникальную статью идеально подходящую для вашего бизнеса, сайта или проекта!</h1>
+            </div>
+            {% block try %}
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <div class="form-row">
+                    <div class="col-12 col-md-6 mx-auto">
+                        <a type="submit" class="btn btn-block btn-lg btn-primary" href="{{ path('app_article_show') }}">Попробовать</a>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset("vendor/jquery/jquery.min.js") }}"></script>
+    <script src="{{ asset("vendor/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
+{% endblock %}
+
+{% block message %}
+{% if app.session.flashBag.peek('flash_message')|length > 0 %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-success" role="alert">
+                    {% for message in app.flashes('flash_message') %}
+                        <div>{{ message }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+{% block body %}{% endblock %}
+
+</body>
+
+</html>
